@@ -1,0 +1,19 @@
+{
+  "name": "aurelia-polyfills",
+  "version": "0.1.0",
+  "description": "The minimal set of polyfills the platform needs to run on evergreen browsers.",
+  "keywords": [
+    "aurelia",
+    "polyfill"
+  ],
+  "homepage": "http://aurelia.io",
+  "bugs": {
+    "url": "https://github.com/aurelia/polyfills/issues"
+  },
+  "license": "MIT",
+  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/aurelia/polyfills"
+  }
+}
