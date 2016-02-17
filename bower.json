@@ -1,7 +1,7 @@
 {
   "name": "aurelia-polyfills",
   "version": "0.1.0",
-  "description": "The minimal set of polyfills the platform needs to run on evergreen browsers.",
+  "description": "The minimal set of polyfills that the Aurelia platform needs to run on ES5 browsers.",
   "keywords": [
     "aurelia",
     "polyfill"
