@@ -365,6 +365,9 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
       }
     }
   })(_aureliaPal.PLATFORM.global);
+  var emptyMetadata = Object.freeze({});
+  var metadataContainerKey = '__metadata__';
+
   if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
     _aureliaPal.PLATFORM.global.Reflect = {};
   }

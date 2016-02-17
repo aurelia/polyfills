@@ -1,7 +1,7 @@
 System.register(['aurelia-pal'], function (_export) {
   'use strict';
 
-  var PLATFORM;
+  var PLATFORM, emptyMetadata, metadataContainerKey;
   return {
     setters: [function (_aureliaPal) {
       PLATFORM = _aureliaPal.PLATFORM;
@@ -372,6 +372,9 @@ System.register(['aurelia-pal'], function (_export) {
           }
         }
       })(PLATFORM.global);
+      emptyMetadata = Object.freeze({});
+      metadataContainerKey = '__metadata__';
+
       if (typeof PLATFORM.global.Reflect === 'undefined') {
         PLATFORM.global.Reflect = {};
       }

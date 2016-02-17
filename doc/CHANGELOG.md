@@ -1,3 +1,11 @@
+### 0.1.2 (2016-02-17)
+
+
+#### Bug Fixes
+
+* **reflect:** missed constants for implementation internals ([36e7a3e6](http://github.com/aurelia/polyfills/commit/36e7a3e6b8f7327af65e01fc98e04352998b0abc))
+
+
 ### 0.1.1 (2016-02-17)
 
 

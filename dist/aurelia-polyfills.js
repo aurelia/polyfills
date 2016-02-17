@@ -397,6 +397,9 @@ if (typeof Object.assign !== 'function') {
   }
 
 })(PLATFORM.global);
+const emptyMetadata = Object.freeze({});
+const metadataContainerKey = '__metadata__';
+
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
 }
