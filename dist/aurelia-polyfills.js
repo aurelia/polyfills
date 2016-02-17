@@ -1,11 +1,11 @@
 import {PLATFORM} from 'aurelia-pal';
 
-Number.isNaN = Number.isNaN || function(value) {
+Number.isNaN = Number.isNaN || function(value) {     
   return value !== value;
 };
 
 Number.isFinite = Number.isFinite || function(value) {
-  return typeof value === 'number' && isFinite(value);
+  return typeof value === "number" && isFinite(value);
 };
 if (!String.prototype.endsWith) {
   String.prototype.endsWith = function(searchString, position) {
@@ -20,45 +20,45 @@ if (!String.prototype.endsWith) {
 }
 
 if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
+  String.prototype.startsWith = function(searchString, position){
     position = position || 0;
     return this.substr(position, searchString.length) === searchString;
   };
 }
 if (!Array.from) {
-  Array.from = (function() {
-    let toStr = Object.prototype.toString;
-    let isCallable = function(fn) {
+  Array.from = (function () {
+    var toStr = Object.prototype.toString;
+    var isCallable = function (fn) {
       return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
     };
-    let toInteger = function(value) {
-      let number = Number(value);
+    var toInteger = function (value) {
+      var number = Number(value);
       if (isNaN(number)) { return 0; }
       if (number === 0 || !isFinite(number)) { return number; }
       return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
     };
-    let maxSafeInteger = Math.pow(2, 53) - 1;
-    let toLength = function(value) {
-      let len = toInteger(value);
+    var maxSafeInteger = Math.pow(2, 53) - 1;
+    var toLength = function (value) {
+      var len = toInteger(value);
       return Math.min(Math.max(len, 0), maxSafeInteger);
     };
 
     // The length property of the from method is 1.
     return function from(arrayLike/*, mapFn, thisArg */) {
       // 1. Let C be the this value.
-      let C = this;
+      var C = this;
 
       // 2. Let items be ToObject(arrayLike).
-      let items = Object(arrayLike);
+      var items = Object(arrayLike);
 
       // 3. ReturnIfAbrupt(items).
-      if (arrayLike === null) {
-        throw new TypeError('Array.from requires an array-like object - not null or undefined');
+      if (arrayLike == null) {
+        throw new TypeError("Array.from requires an array-like object - not null or undefined");
       }
 
       // 4. If mapfn is undefined, then let mapping be false.
-      let mapFn = arguments.length > 1 ? arguments[1] : void undefined;
-      let T;
+      var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
+      var T;
       if (typeof mapFn !== 'undefined') {
         // 5. else
         // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
@@ -74,17 +74,17 @@ if (!Array.from) {
 
       // 10. Let lenValue be Get(items, "length").
       // 11. Let len be ToLength(lenValue).
-      let len = toLength(items.length);
+      var len = toLength(items.length);
 
       // 13. If IsConstructor(C) is true, then
       // 13. a. Let A be the result of calling the [[Construct]] internal method of C with an argument list containing the single item len.
       // 14. a. Else, Let A be ArrayCreate(len).
-      let A = isCallable(C) ? Object(new C(len)) : new Array(len);
+      var A = isCallable(C) ? Object(new C(len)) : new Array(len);
 
       // 16. Let k be 0.
-      let k = 0;
+      var k = 0;
       // 17. Repeat, while k < len… (also steps a - h)
-      let kValue;
+      var kValue;
       while (k < len) {
         kValue = items[k];
         if (mapFn) {
@@ -110,12 +110,12 @@ if (!Array.prototype.find) {
     if (typeof predicate !== 'function') {
       throw new TypeError('predicate must be a function');
     }
-    let list = Object(this);
-    let length = list.length >>> 0;
-    let thisArg = arguments[1];
-    let value;
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
 
-    for (let i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
       value = list[i];
       if (predicate.call(thisArg, value, i, list)) {
         return value;
@@ -133,12 +133,12 @@ if (!Array.prototype.findIndex) {
     if (typeof predicate !== 'function') {
       throw new TypeError('predicate must be a function');
     }
-    let list = Object(this);
-    let length = list.length >>> 0;
-    let thisArg = arguments[1];
-    let value;
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
 
-    for (let i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
       value = list[i];
       if (predicate.call(thisArg, value, i, list)) {
         return i;
@@ -150,20 +150,20 @@ if (!Array.prototype.findIndex) {
 
 if (!Array.prototype.includes) {
   Array.prototype.includes = function(searchElement /*, fromIndex*/ ) {
-    let O = Object(this);
-    let len = parseInt(O.length) || 0;
+    var O = Object(this);
+    var len = parseInt(O.length) || 0;
     if (len === 0) {
       return false;
     }
-    let n = parseInt(arguments[1]) || 0;
-    let k;
+    var n = parseInt(arguments[1]) || 0;
+    var k;
     if (n >= 0) {
       k = n;
     } else {
       k = len + n;
       if (k < 0) {k = 0;}
     }
-    let currentElement;
+    var currentElement;
     while (k < len) {
       currentElement = O[k];
       if (searchElement === currentElement ||
@@ -176,16 +176,16 @@ if (!Array.prototype.includes) {
   };
 }
 if (typeof Object.assign !== 'function') {
-  Object.assign = function(target) {
+  Object.assign = function (target) {
     if (target === undefined || target === null) {
       throw new TypeError('Cannot convert undefined or null to object');
     }
 
     let output = Object(target);
-
+    
     for (let index = 1; index < arguments.length; index++) {
       let source = arguments[index];
-
+      
       if (source !== undefined && source !== null) {
         for (let nextKey in source) {
           if (source.hasOwnProperty(nextKey)) {
@@ -194,19 +194,19 @@ if (typeof Object.assign !== 'function') {
         }
       }
     }
-
+    
     return output;
   };
 }
-(function(global) {
+(function (global) {
   //shared pointer
   let i;
   //shortcuts
   let defineProperty = Object.defineProperty;
-  let is = function(a, b) { return (a === b) || (a !== a && b !== b); };
+  let is = function(a,b) { return (a === b) || (a !== a && b !== b) };
 
   //Polyfill global objects
-  if (typeof Map === 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
+  if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
     global.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
@@ -230,7 +230,7 @@ if (typeof Object.assign !== 'function') {
     });
   }
 
-  if (typeof Set === 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
+  if (typeof Set == 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
     global.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
@@ -255,8 +255,8 @@ if (typeof Object.assign !== 'function') {
    * ES6 collection constructor
    * @return {Function} a collection class
    */
-  function createCollection(proto, objectOnly) {
-    function Collection(a) {
+  function createCollection(proto, objectOnly){
+    function Collection(a){
       if (!this || this.constructor !== Collection) return new Collection(a);
       this._keys = [];
       this._values = [];
@@ -264,9 +264,7 @@ if (typeof Object.assign !== 'function') {
       this.objectOnly = objectOnly;
 
       //parse initial iterable argument passed
-      if (a) {
-        init.call(this, a);
-      }
+      if (a) init.call(this, a);
     }
 
     //define size for non object-only collections
@@ -285,14 +283,14 @@ if (typeof Object.assign !== 'function') {
 
 
   /** parse initial iterable argument passed */
-  function init(a) {
+  function init(a){
+    var i;
     //init Set argument, like `[1,2,3,{}]`
-    if (this.add) {
+    if (this.add)
       a.forEach(this.add, this);
     //init Map argument like `[[1,2], [{}, 4]]`
-    } else {
-      a.forEach(function(a) { this.set(a[0], a[1]); }, this);
-    }
+    else
+      a.forEach(function(a){this.set(a[0],a[1])}, this);
   }
 
 
@@ -306,23 +304,18 @@ if (typeof Object.assign !== 'function') {
     }
     // Aurora here does it while Canary doesn't
     return -1 < i;
-  }
+  };
 
   function sharedGet(key) {
     return this.has(key) ? this._values[i] : undefined;
   }
 
   function has(list, key) {
-    if (this.objectOnly && key !== Object(key)) {
-      throw new TypeError('Invalid value used as weak collection key');
-    }
+    if (this.objectOnly && key !== Object(key))
+      throw new TypeError("Invalid value used as weak collection key");
     //NaN or 0 passed
-    if (key !== key || key === 0) {
-      for (i = list.length; i-- && !is(list[i], key); ) {}
-    } else {
-      i = list.indexOf(key);
-    }
-    
+    if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);){}
+    else i = list.indexOf(key);
     return -1 < i;
   }
 
@@ -373,13 +366,11 @@ if (typeof Object.assign !== 'function') {
   }
 
   function sharedIterator(itp, array, array2) {
-    let p = [0];
-    let done = false;
+    var p = [0], done = false;
     itp.push(p);
     return {
       next: function() {
-        let v;
-        let k = p[0];
+        var v, k = p[0];
         if (!done && k < array.length) {
           v = array2 ? [array[k], array2[k]]: array[k];
           p[0]++;
@@ -397,13 +388,14 @@ if (typeof Object.assign !== 'function') {
   }
 
   function sharedForEach(callback, context) {
-    let it = this.entries();
+    var it = this.entries();
     for (;;) {
-      let r = it.next();
+      var r = it.next();
       if (r.done) break;
       callback.call(context, r.value[1], r.value[0], this);
     }
   }
+
 })(PLATFORM.global);
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
@@ -434,7 +426,7 @@ if (typeof Reflect.metadata !== 'function') {
 if (typeof Reflect.construct !== 'function') {
   Reflect.construct = function(target, args) {
     if (args) {
-      switch (args.length) {
+      switch (args.length){
         case 0: return new Target();
         case 1: return new Target(args[0]);
         case 2: return new Target(args[0], args[1]);
@@ -442,8 +434,8 @@ if (typeof Reflect.construct !== 'function') {
         case 4: return new Target(args[0], args[1], args[2], args[3]);
       }
     }
-
-    let a = [null];
+    
+    var a = [null];
     a.push.apply(a, args);
     return new (bind.apply(Target, a));
   };

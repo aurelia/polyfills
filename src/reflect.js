@@ -29,7 +29,7 @@ if (typeof Reflect.metadata !== 'function') {
 if (typeof Reflect.construct !== 'function') {
   Reflect.construct = function(target, args) {
     if (args) {
-      switch (args.length) {
+      switch (args.length){
         case 0: return new Target();
         case 1: return new Target(args[0]);
         case 2: return new Target(args[0], args[1]);
@@ -37,8 +37,8 @@ if (typeof Reflect.construct !== 'function') {
         case 4: return new Target(args[0], args[1], args[2], args[3]);
       }
     }
-
-    let a = [null];
+    
+    var a = [null];
     a.push.apply(a, args);
     return new (bind.apply(Target, a));
   };
