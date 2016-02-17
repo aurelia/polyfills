@@ -2,58 +2,205 @@
 
 var _aureliaPal = require('aurelia-pal');
 
-if (typeof Object.assign !== 'function') {
-  (function () {
-    Object.assign = function (target) {
-      'use strict';
-      if (target === undefined || target === null) {
-        throw new TypeError('Cannot convert undefined or null to object');
+Number.isNaN = Number.isNaN || function (value) {
+  return value !== value;
+};
+
+Number.isFinite = Number.isFinite || function (value) {
+  return typeof value === "number" && isFinite(value);
+};
+if (!String.prototype.endsWith) {
+  String.prototype.endsWith = function (searchString, position) {
+    var subjectString = this.toString();
+    if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+      position = subjectString.length;
+    }
+    position -= searchString.length;
+    var lastIndex = subjectString.indexOf(searchString, position);
+    return lastIndex !== -1 && lastIndex === position;
+  };
+}
+
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function (searchString, position) {
+    position = position || 0;
+    return this.substr(position, searchString.length) === searchString;
+  };
+}
+if (!Array.from) {
+  Array.from = (function () {
+    var toStr = Object.prototype.toString;
+    var isCallable = function isCallable(fn) {
+      return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
+    };
+    var toInteger = function toInteger(value) {
+      var number = Number(value);
+      if (isNaN(number)) {
+        return 0;
+      }
+      if (number === 0 || !isFinite(number)) {
+        return number;
+      }
+      return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+    };
+    var maxSafeInteger = Math.pow(2, 53) - 1;
+    var toLength = function toLength(value) {
+      var len = toInteger(value);
+      return Math.min(Math.max(len, 0), maxSafeInteger);
+    };
+
+    return function from(arrayLike) {
+      var C = this;
+
+      var items = Object(arrayLike);
+
+      if (arrayLike == null) {
+        throw new TypeError("Array.from requires an array-like object - not null or undefined");
       }
 
-      var output = Object(target);
+      var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
+      var T;
+      if (typeof mapFn !== 'undefined') {
+        if (!isCallable(mapFn)) {
+          throw new TypeError('Array.from: when provided, the second argument must be a function');
+        }
 
-      for (var index = 1; index < arguments.length; index++) {
-        var source = arguments[index];
-
-        if (source !== undefined && source !== null) {
-          for (var nextKey in source) {
-            if (source.hasOwnProperty(nextKey)) {
-              output[nextKey] = source[nextKey];
-            }
-          }
+        if (arguments.length > 2) {
+          T = arguments[2];
         }
       }
 
-      return output;
+      var len = toLength(items.length);
+
+      var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+
+      var k = 0;
+
+      var kValue;
+      while (k < len) {
+        kValue = items[k];
+        if (mapFn) {
+          A[k] = typeof T === 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+        } else {
+          A[k] = kValue;
+        }
+        k += 1;
+      }
+
+      A.length = len;
+
+      return A;
     };
   })();
 }
-(function (exports) {
-  'use strict';
 
-  var i;
+if (!Array.prototype.find) {
+  Array.prototype.find = function (predicate) {
+    if (this === null) {
+      throw new TypeError('Array.prototype.find called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
 
-  var defineProperty = Object.defineProperty,
-      is = function is(a, b) {
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return value;
+      }
+    }
+    return undefined;
+  };
+}
+
+if (!Array.prototype.findIndex) {
+  Array.prototype.findIndex = function (predicate) {
+    if (this === null) {
+      throw new TypeError('Array.prototype.findIndex called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
+
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function (searchElement) {
+    var O = Object(this);
+    var len = parseInt(O.length) || 0;
+    if (len === 0) {
+      return false;
+    }
+    var n = parseInt(arguments[1]) || 0;
+    var k;
+    if (n >= 0) {
+      k = n;
+    } else {
+      k = len + n;
+      if (k < 0) {
+        k = 0;
+      }
+    }
+    var currentElement;
+    while (k < len) {
+      currentElement = O[k];
+      if (searchElement === currentElement || searchElement !== searchElement && currentElement !== currentElement) {
+        return true;
+      }
+      k++;
+    }
+    return false;
+  };
+}
+if (typeof Object.assign !== 'function') {
+  Object.assign = function (target) {
+    if (target === undefined || target === null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var output = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var source = arguments[index];
+
+      if (source !== undefined && source !== null) {
+        for (var nextKey in source) {
+          if (source.hasOwnProperty(nextKey)) {
+            output[nextKey] = source[nextKey];
+          }
+        }
+      }
+    }
+
+    return output;
+  };
+}
+(function (global) {
+  var i = undefined;
+
+  var defineProperty = Object.defineProperty;
+  var is = function is(a, b) {
     return a === b || a !== a && b !== b;
   };
 
-  if (typeof WeakMap == 'undefined') {
-    exports.WeakMap = createCollection({
-      'delete': sharedDelete,
-
-      clear: sharedClear,
-
-      get: sharedGet,
-
-      has: mapHas,
-
-      set: sharedSet
-    }, true);
-  }
-
   if (typeof Map == 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
-    exports.Map = createCollection({
+    global.Map = createCollection({
       'delete': sharedDelete,
 
       has: mapHas,
@@ -75,7 +222,7 @@ if (typeof Object.assign !== 'function') {
   }
 
   if (typeof Set == 'undefined' || typeof new Set().values !== 'function' || !new Set().values().next) {
-    exports.Set = createCollection({
+    global.Set = createCollection({
       has: setHas,
 
       add: sharedAdd,
@@ -91,18 +238,6 @@ if (typeof Object.assign !== 'function') {
 
       forEach: sharedForEach
     });
-  }
-
-  if (typeof WeakSet == 'undefined') {
-    exports.WeakSet = createCollection({
-      'delete': sharedDelete,
-
-      add: sharedAdd,
-
-      clear: sharedClear,
-
-      has: setHas
-    }, true);
   }
 
   function createCollection(proto, objectOnly) {
@@ -231,3 +366,51 @@ if (typeof Object.assign !== 'function') {
     }
   }
 })(_aureliaPal.PLATFORM.global);
+if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
+  _aureliaPal.PLATFORM.global.Reflect = {};
+}
+
+if (typeof Reflect.getOwnMetadata !== 'function') {
+  Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
+    return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+  };
+}
+
+if (typeof Reflect.defineMetadata !== 'function') {
+  Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
+    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
+    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+    targetContainer[metadataKey] = metadataValue;
+  };
+}
+
+if (typeof Reflect.metadata !== 'function') {
+  Reflect.metadata = function (metadataKey, metadataValue) {
+    return function (target, targetKey) {
+      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+    };
+  };
+}
+
+if (typeof Reflect.construct !== 'function') {
+  Reflect.construct = function (target, args) {
+    if (args) {
+      switch (args.length) {
+        case 0:
+          return new Target();
+        case 1:
+          return new Target(args[0]);
+        case 2:
+          return new Target(args[0], args[1]);
+        case 3:
+          return new Target(args[0], args[1], args[2]);
+        case 4:
+          return new Target(args[0], args[1], args[2], args[3]);
+      }
+    }
+
+    var a = [null];
+    a.push.apply(a, args);
+    return new (bind.apply(Target, a))();
+  };
+}

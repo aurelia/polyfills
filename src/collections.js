@@ -1,30 +1,15 @@
 import {PLATFORM} from 'aurelia-pal';
 
-(function (exports) {'use strict';
+(function (global) {
   //shared pointer
-  var i;
+  let i;
   //shortcuts
-  var defineProperty = Object.defineProperty, is = function(a,b) { return (a === b) || (a !== a && b !== b) };
-
+  let defineProperty = Object.defineProperty;
+  let is = function(a,b) { return (a === b) || (a !== a && b !== b) };
 
   //Polyfill global objects
-  if (typeof WeakMap == 'undefined') {
-    exports.WeakMap = createCollection({
-      // WeakMap#delete(key:void*):boolean
-      'delete': sharedDelete,
-      // WeakMap#clear():
-      clear: sharedClear,
-      // WeakMap#get(key:void*):void*
-      get: sharedGet,
-      // WeakMap#has(key:void*):boolean
-      has: mapHas,
-      // WeakMap#set(key:void*, value:void*):void
-      set: sharedSet
-    }, true);
-  }
-
   if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
-    exports.Map = createCollection({
+    global.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       //:was Map#get(key:void*[, d3fault:void*]):void*
@@ -48,7 +33,7 @@ import {PLATFORM} from 'aurelia-pal';
   }
 
   if (typeof Set == 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
-    exports.Set = createCollection({
+    global.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
       // Set#add(value:void*):boolean
@@ -67,20 +52,6 @@ import {PLATFORM} from 'aurelia-pal';
       forEach: sharedForEach
     });
   }
-
-  if (typeof WeakSet == 'undefined') {
-    exports.WeakSet = createCollection({
-      // WeakSet#delete(key:void*):boolean
-      'delete': sharedDelete,
-      // WeakSet#add(value:void*):boolean
-      add: sharedAdd,
-      // WeakSet#clear():
-      clear: sharedClear,
-      // WeakSet#has(value:void*):boolean
-      has: setHas
-    }, true);
-  }
-
 
   /**
    * ES6 collection constructor
