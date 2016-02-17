@@ -1,14 +1,14 @@
 import {PLATFORM} from 'aurelia-pal';
 
-(function (global) {
+(function(global) {
   //shared pointer
   let i;
   //shortcuts
   let defineProperty = Object.defineProperty;
-  let is = function(a,b) { return (a === b) || (a !== a && b !== b) };
+  let is = function(a, b) { return (a === b) || (a !== a && b !== b); };
 
   //Polyfill global objects
-  if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
+  if (typeof Map === 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
     global.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
@@ -32,7 +32,7 @@ import {PLATFORM} from 'aurelia-pal';
     });
   }
 
-  if (typeof Set == 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
+  if (typeof Set === 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
     global.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
@@ -57,8 +57,8 @@ import {PLATFORM} from 'aurelia-pal';
    * ES6 collection constructor
    * @return {Function} a collection class
    */
-  function createCollection(proto, objectOnly){
-    function Collection(a){
+  function createCollection(proto, objectOnly) {
+    function Collection(a) {
       if (!this || this.constructor !== Collection) return new Collection(a);
       this._keys = [];
       this._values = [];
@@ -66,7 +66,9 @@ import {PLATFORM} from 'aurelia-pal';
       this.objectOnly = objectOnly;
 
       //parse initial iterable argument passed
-      if (a) init.call(this, a);
+      if (a) {
+        init.call(this, a);
+      }
     }
 
     //define size for non object-only collections
@@ -85,14 +87,14 @@ import {PLATFORM} from 'aurelia-pal';
 
 
   /** parse initial iterable argument passed */
-  function init(a){
-    var i;
+  function init(a) {
     //init Set argument, like `[1,2,3,{}]`
-    if (this.add)
+    if (this.add) {
       a.forEach(this.add, this);
     //init Map argument like `[[1,2], [{}, 4]]`
-    else
-      a.forEach(function(a){this.set(a[0],a[1])}, this);
+    } else {
+      a.forEach(function(a) { this.set(a[0], a[1]); }, this);
+    }
   }
 
 
@@ -106,18 +108,23 @@ import {PLATFORM} from 'aurelia-pal';
     }
     // Aurora here does it while Canary doesn't
     return -1 < i;
-  };
+  }
 
   function sharedGet(key) {
     return this.has(key) ? this._values[i] : undefined;
   }
 
   function has(list, key) {
-    if (this.objectOnly && key !== Object(key))
-      throw new TypeError("Invalid value used as weak collection key");
+    if (this.objectOnly && key !== Object(key)) {
+      throw new TypeError('Invalid value used as weak collection key');
+    }
     //NaN or 0 passed
-    if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);){}
-    else i = list.indexOf(key);
+    if (key !== key || key === 0) {
+      for (i = list.length; i-- && !is(list[i], key); ) {}
+    } else {
+      i = list.indexOf(key);
+    }
+    
     return -1 < i;
   }
 
@@ -168,11 +175,13 @@ import {PLATFORM} from 'aurelia-pal';
   }
 
   function sharedIterator(itp, array, array2) {
-    var p = [0], done = false;
+    let p = [0];
+    let done = false;
     itp.push(p);
     return {
       next: function() {
-        var v, k = p[0];
+        let v;
+        let k = p[0];
         if (!done && k < array.length) {
           v = array2 ? [array[k], array2[k]]: array[k];
           p[0]++;
@@ -190,12 +199,11 @@ import {PLATFORM} from 'aurelia-pal';
   }
 
   function sharedForEach(callback, context) {
-    var it = this.entries();
+    let it = this.entries();
     for (;;) {
-      var r = it.next();
+      let r = it.next();
       if (r.done) break;
       callback.call(context, r.value[1], r.value[0], this);
     }
   }
-
 })(PLATFORM.global);

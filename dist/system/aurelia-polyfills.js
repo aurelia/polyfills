@@ -13,7 +13,7 @@ System.register(['aurelia-pal'], function (_export) {
       };
 
       Number.isFinite = Number.isFinite || function (value) {
-        return typeof value === "number" && isFinite(value);
+        return typeof value === 'number' && isFinite(value);
       };
       if (!String.prototype.endsWith) {
         String.prototype.endsWith = function (searchString, position) {
@@ -60,12 +60,12 @@ System.register(['aurelia-pal'], function (_export) {
 
             var items = Object(arrayLike);
 
-            if (arrayLike == null) {
-              throw new TypeError("Array.from requires an array-like object - not null or undefined");
+            if (arrayLike === null) {
+              throw new TypeError('Array.from requires an array-like object - not null or undefined');
             }
 
             var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
-            var T;
+            var T = undefined;
             if (typeof mapFn !== 'undefined') {
               if (!isCallable(mapFn)) {
                 throw new TypeError('Array.from: when provided, the second argument must be a function');
@@ -82,7 +82,7 @@ System.register(['aurelia-pal'], function (_export) {
 
             var k = 0;
 
-            var kValue;
+            var kValue = undefined;
             while (k < len) {
               kValue = items[k];
               if (mapFn) {
@@ -111,7 +111,7 @@ System.register(['aurelia-pal'], function (_export) {
           var list = Object(this);
           var length = list.length >>> 0;
           var thisArg = arguments[1];
-          var value;
+          var value = undefined;
 
           for (var i = 0; i < length; i++) {
             value = list[i];
@@ -134,7 +134,7 @@ System.register(['aurelia-pal'], function (_export) {
           var list = Object(this);
           var length = list.length >>> 0;
           var thisArg = arguments[1];
-          var value;
+          var value = undefined;
 
           for (var i = 0; i < length; i++) {
             value = list[i];
@@ -154,7 +154,7 @@ System.register(['aurelia-pal'], function (_export) {
             return false;
           }
           var n = parseInt(arguments[1]) || 0;
-          var k;
+          var k = undefined;
           if (n >= 0) {
             k = n;
           } else {
@@ -163,7 +163,7 @@ System.register(['aurelia-pal'], function (_export) {
               k = 0;
             }
           }
-          var currentElement;
+          var currentElement = undefined;
           while (k < len) {
             currentElement = O[k];
             if (searchElement === currentElement || searchElement !== searchElement && currentElement !== currentElement) {
@@ -205,7 +205,7 @@ System.register(['aurelia-pal'], function (_export) {
           return a === b || a !== a && b !== b;
         };
 
-        if (typeof Map == 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
+        if (typeof Map === 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
           global.Map = createCollection({
             'delete': sharedDelete,
 
@@ -227,7 +227,7 @@ System.register(['aurelia-pal'], function (_export) {
           });
         }
 
-        if (typeof Set == 'undefined' || typeof new Set().values !== 'function' || !new Set().values().next) {
+        if (typeof Set === 'undefined' || typeof new Set().values !== 'function' || !new Set().values().next) {
           global.Set = createCollection({
             has: setHas,
 
@@ -254,7 +254,9 @@ System.register(['aurelia-pal'], function (_export) {
             this._itp = [];
             this.objectOnly = objectOnly;
 
-            if (a) init.call(this, a);
+            if (a) {
+              init.call(this, a);
+            }
           }
 
           if (!objectOnly) {
@@ -270,11 +272,13 @@ System.register(['aurelia-pal'], function (_export) {
         }
 
         function init(a) {
-          var i;
-
-          if (this.add) a.forEach(this.add, this);else a.forEach(function (a) {
-              this.set(a[0], a[1]);
-            }, this);
+          if (this.add) {
+            a.forEach(this.add, this);
+          } else {
+              a.forEach(function (a) {
+                this.set(a[0], a[1]);
+              }, this);
+            }
         }
 
         function sharedDelete(key) {
@@ -288,16 +292,23 @@ System.register(['aurelia-pal'], function (_export) {
           }
 
           return -1 < i;
-        };
+        }
 
         function sharedGet(key) {
           return this.has(key) ? this._values[i] : undefined;
         }
 
         function has(list, key) {
-          if (this.objectOnly && key !== Object(key)) throw new TypeError("Invalid value used as weak collection key");
+          if (this.objectOnly && key !== Object(key)) {
+            throw new TypeError('Invalid value used as weak collection key');
+          }
 
-          if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);) {} else i = list.indexOf(key);
+          if (key !== key || key === 0) {
+            for (i = list.length; i-- && !is(list[i], key);) {}
+          } else {
+            i = list.indexOf(key);
+          }
+
           return -1 < i;
         }
 
@@ -340,13 +351,13 @@ System.register(['aurelia-pal'], function (_export) {
         }
 
         function sharedIterator(itp, array, array2) {
-          var p = [0],
-              done = false;
+          var p = [0];
+          var done = false;
           itp.push(p);
           return {
             next: function next() {
-              var v,
-                  k = p[0];
+              var v = undefined;
+              var k = p[0];
               if (!done && k < array.length) {
                 v = array2 ? [array[k], array2[k]] : array[k];
                 p[0]++;
