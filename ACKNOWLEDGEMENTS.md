@@ -1,6 +1,6 @@
 # Acknowledgements
 
-The object.Observe, String, Number and Array polyfills come from the MDN documentation. The collections polyfills come from https://github.com/WebReflection/es6-collections. Many thanks to the individuals who worked so hard on these implementations. License are included below.
+The Object.assign(), String, Number and Array polyfills come from the MDN documentation. The collections polyfills come from https://github.com/WebReflection/es6-collections. Many thanks to the individuals who worked so hard on these implementations. License are included below.
 
 Copyright (C) 2011 by Andrea Giammarchi, @WebReflection
 
