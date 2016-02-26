@@ -2,6 +2,7 @@ import {PLATFORM} from 'aurelia-pal';
 
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
+const bind = Function.prototype.bind;
 
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
