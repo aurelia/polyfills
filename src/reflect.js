@@ -31,7 +31,7 @@ if (typeof Reflect.metadata !== 'function') {
 }
 
 if (typeof Reflect.construct !== 'function') {
-  Reflect.construct = function(target, args) {
+  Reflect.construct = function(Target, args) {
     if (args) {
       switch (args.length){
         case 0: return new Target();
