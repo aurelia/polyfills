@@ -1,3 +1,13 @@
+### 1.0.0-beta.1.0.0 (2016-03-01)
+
+
+#### Bug Fixes
+
+* **reflect:**
+  * incorrect arg casing ([52f06db5](http://github.com/aurelia/polyfills/commit/52f06db5682042ee1b3c4601a4133b10e446e7b4))
+  * missing bind reference ([89964a16](http://github.com/aurelia/polyfills/commit/89964a1602ad216ef1db0f04823f62dd04a67dca))
+
+
 ### 0.1.2 (2016-02-17)
 
 

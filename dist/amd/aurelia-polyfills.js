@@ -367,6 +367,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
   })(_aureliaPal.PLATFORM.global);
   var emptyMetadata = Object.freeze({});
   var metadataContainerKey = '__metadata__';
+  var bind = Function.prototype.bind;
 
   if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
     _aureliaPal.PLATFORM.global.Reflect = {};
@@ -395,7 +396,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
   }
 
   if (typeof Reflect.construct !== 'function') {
-    Reflect.construct = function (target, args) {
+    Reflect.construct = function (Target, args) {
       if (args) {
         switch (args.length) {
           case 0:

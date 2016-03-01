@@ -399,6 +399,7 @@ if (typeof Object.assign !== 'function') {
 })(PLATFORM.global);
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
+const bind = Function.prototype.bind;
 
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
@@ -427,7 +428,7 @@ if (typeof Reflect.metadata !== 'function') {
 }
 
 if (typeof Reflect.construct !== 'function') {
-  Reflect.construct = function(target, args) {
+  Reflect.construct = function(Target, args) {
     if (args) {
       switch (args.length){
         case 0: return new Target();
