@@ -191,12 +191,26 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     };
   }
   (function (global) {
-    var i = undefined;
+    var i;
 
-    var defineProperty = Object.defineProperty;
-    var is = function is(a, b) {
+    var defineProperty = Object.defineProperty,
+        is = function is(a, b) {
       return a === b || a !== a && b !== b;
     };
+
+    if (typeof WeakMap == 'undefined') {
+      global.WeakMap = createCollection({
+        'delete': sharedDelete,
+
+        clear: sharedClear,
+
+        get: sharedGet,
+
+        has: mapHas,
+
+        set: sharedSet
+      }, true);
+    }
 
     if (typeof Map == 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
       global.Map = createCollection({
@@ -237,6 +251,18 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
 
         forEach: sharedForEach
       });
+    }
+
+    if (typeof WeakSet == 'undefined') {
+      global.WeakSet = createCollection({
+        'delete': sharedDelete,
+
+        add: sharedAdd,
+
+        clear: sharedClear,
+
+        has: setHas
+      }, true);
     }
 
     function createCollection(proto, objectOnly) {

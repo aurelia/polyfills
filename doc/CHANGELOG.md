@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.0.1 (2016-03-02)
+
+
+#### Features
+
+* **collections:** add weak map and set ([59d58dc6](http://github.com/aurelia/polyfills/commit/59d58dc6a571718a3b70329d6c54d3a5c00a063b))
+
+
 ### 1.0.0-beta.1.0.0 (2016-03-01)
 
 
