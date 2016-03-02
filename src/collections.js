@@ -2,12 +2,26 @@ import {PLATFORM} from 'aurelia-pal';
 
 (function (global) {
   //shared pointer
-  let i;
+  var i;
   //shortcuts
-  let defineProperty = Object.defineProperty;
-  let is = function(a,b) { return (a === b) || (a !== a && b !== b) };
+  var defineProperty = Object.defineProperty, is = function(a,b) { return (a === b) || (a !== a && b !== b) };
 
   //Polyfill global objects
+  if (typeof WeakMap == 'undefined') {
+    global.WeakMap = createCollection({
+      // WeakMap#delete(key:void*):boolean
+      'delete': sharedDelete,
+      // WeakMap#clear():
+      clear: sharedClear,
+      // WeakMap#get(key:void*):void*
+      get: sharedGet,
+      // WeakMap#has(key:void*):boolean
+      has: mapHas,
+      // WeakMap#set(key:void*, value:void*):void
+      set: sharedSet
+    }, true);
+  }
+
   if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
     global.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
@@ -51,6 +65,19 @@ import {PLATFORM} from 'aurelia-pal';
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
       forEach: sharedForEach
     });
+  }
+
+  if (typeof WeakSet == 'undefined') {
+    global.WeakSet = createCollection({
+      // WeakSet#delete(key:void*):boolean
+      'delete': sharedDelete,
+      // WeakSet#add(value:void*):boolean
+      add: sharedAdd,
+      // WeakSet#clear():
+      clear: sharedClear,
+      // WeakSet#has(value:void*):boolean
+      has: setHas
+    }, true);
   }
 
   /**
