@@ -202,6 +202,9 @@ import {PLATFORM} from 'aurelia-pal';
     var p = [0], done = false;
     itp.push(p);
     return {
+      [Symbol.iterator]: function () {
+        return this;
+      },
       next: function() {
         var v, k = p[0];
         if (!done && k < array.length) {
