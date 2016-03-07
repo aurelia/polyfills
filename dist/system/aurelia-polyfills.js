@@ -212,7 +212,7 @@ System.register(['aurelia-pal'], function (_export) {
                 descriptor = O.getOwnPropertyDescriptor(ObjectProto, 'toString');
                 descriptor.value = function () {
                   var str = toString.call(this),
-                      tst = this[Symbol.toStringTag];
+                      tst = typeof this === 'undefined' ? undefined : this[Symbol.toStringTag];
                   return typeof tst === 'undefined' ? str : '[object ' + tst + ']';
                 };
                 dP(ObjectProto, 'toString', descriptor);
@@ -425,6 +425,54 @@ System.register(['aurelia-pal'], function (_export) {
           return false;
         };
       }
+      (function () {
+        var needsFix = false;
+
+        try {
+          var s = Object.keys('a');
+          needsFix = s.length !== 1 || s[0] !== '0';
+        } catch (e) {
+          needsFix = true;
+        }
+
+        if (needsFix) {
+          Object.keys = (function () {
+            var hasOwnProperty = Object.prototype.hasOwnProperty,
+                hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+                dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+                dontEnumsLength = dontEnums.length;
+
+            return function (obj) {
+              if (obj === undefined || obj === null) {
+                throw TypeError('Cannot convert undefined or null to object');
+              }
+
+              obj = Object(obj);
+
+              var result = [],
+                  prop,
+                  i;
+
+              for (prop in obj) {
+                if (hasOwnProperty.call(obj, prop)) {
+                  result.push(prop);
+                }
+              }
+
+              if (hasDontEnumBug) {
+                for (i = 0; i < dontEnumsLength; i++) {
+                  if (hasOwnProperty.call(obj, dontEnums[i])) {
+                    result.push(dontEnums[i]);
+                  }
+                }
+              }
+
+              return result;
+            };
+          })();
+        }
+      })();
+
       (function (O) {
         if ('assign' in O) return;
         O.defineProperty(O, 'assign', {

@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.0.3 (2016-03-07)
+
+
+#### Bug Fixes
+
+* **object:** correct es6 Object.keys behavior for primitives ([11852935](http://github.com/aurelia/polyfills/commit/11852935d02a451f2ea13c48dd0dd6877d890c8e))
+
+
 ### 1.0.0-beta.1.0.2 (2016-03-06)
 
 
