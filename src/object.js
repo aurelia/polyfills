@@ -1,3 +1,58 @@
+(function() {
+  let needsFix = false;
+
+  //ES5 did not accept primitives, but ES6 does
+  try {
+    let s = Object.keys('a');
+    needsFix = (s.length !== 1 || s[0] !== '0');
+  } catch(e) {
+    needsFix = true;
+  }
+
+  if (needsFix) {
+    Object.keys = (function() {
+      var hasOwnProperty = Object.prototype.hasOwnProperty,
+          hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+          dontEnums = [
+            'toString',
+            'toLocaleString',
+            'valueOf',
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'constructor'
+          ],
+          dontEnumsLength = dontEnums.length;
+
+      return function(obj) {
+        if (obj === undefined || obj === null){
+          throw TypeError(`Cannot convert undefined or null to object`);
+        }
+
+        obj = Object(obj);
+
+        var result = [], prop, i;
+
+        for (prop in obj) {
+          if (hasOwnProperty.call(obj, prop)) {
+            result.push(prop);
+          }
+        }
+
+        if (hasDontEnumBug) {
+          for (i = 0; i < dontEnumsLength; i++) {
+            if (hasOwnProperty.call(obj, dontEnums[i])) {
+              result.push(dontEnums[i]);
+            }
+          }
+        }
+
+        return result;
+      };
+    }());
+  }
+}());
+
 (function (O) {
   if ('assign' in O) return;
   O.defineProperty(
