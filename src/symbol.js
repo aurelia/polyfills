@@ -246,7 +246,7 @@
           descriptor.value = function () {
             var
               str = toString.call(this),
-              tst = this[Symbol.toStringTag]
+              tst = typeof this === 'undefined' ? undefined : this[Symbol.toStringTag]
             ;
             return typeof tst === 'undefined' ? str : ('[object ' + tst + ']');
           };
