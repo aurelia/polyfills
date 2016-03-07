@@ -42,7 +42,9 @@ import {PLATFORM} from 'aurelia-pal';
       // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, mapObject) === not in specs`
       forEach: sharedForEach,
       // Map#clear():
-      clear: sharedClear
+      clear: sharedClear,
+      //iterator
+      [Symbol.iterator]: mapEntries
     });
   }
 
@@ -63,7 +65,9 @@ import {PLATFORM} from 'aurelia-pal';
       // Set#entries(void):Iterator
       entries: setEntries,
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
-      forEach: sharedForEach
+      forEach: sharedForEach,
+      //iterator
+      [Symbol.iterator]: sharedValues
     });
   }
 

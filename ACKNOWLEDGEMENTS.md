@@ -1,6 +1,6 @@
 # Acknowledgements
 
-The Object.assign(), String, Number and Array polyfills come from the MDN documentation. The collections polyfills come from https://github.com/WebReflection/es6-collections. The Reflect.construct polyfill is based on the CoreJS implementation. Many thanks to the individuals who worked so hard on these implementations. License are included below.
+The String, Number and Array polyfills come from the MDN documentation. The collections, Symbol and Object.assign polyfills come from https://github.com/WebReflection. The Reflect.construct polyfill is based on the CoreJS implementation. Many thanks to the individuals who worked so hard on these implementations. Licenses are included below.
 
 ====
 
