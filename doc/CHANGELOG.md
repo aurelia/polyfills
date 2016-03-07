@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.0.2 (2016-03-06)
+
+
+#### Features
+
+* **all:** add symbols ([f11b8f42](http://github.com/aurelia/polyfills/commit/f11b8f422cb512c3e4aba377278ab0a33375a96d))
+
+
 ### 1.0.0-beta.1.0.1 (2016-03-02)
 
 
