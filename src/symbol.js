@@ -244,6 +244,7 @@
         case toStringTag:
           descriptor = O.getOwnPropertyDescriptor(ObjectProto, 'toString');
           descriptor.value = function () {
+            if(typeof this === 'undefined') return 'undefined';
             var
               str = toString.call(this),
               tst = this[Symbol.toStringTag]
