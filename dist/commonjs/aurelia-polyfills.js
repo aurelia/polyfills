@@ -468,7 +468,10 @@ if (!Array.prototype.includes) {
 })();
 
 (function (O) {
-  if ('assign' in O) return;
+  if ('assign' in O) {
+    return;
+  }
+
   O.defineProperty(O, 'assign', {
     configurable: true,
     writable: true,
@@ -480,6 +483,7 @@ if (!Array.prototype.includes) {
       } : function () {
         return Array.prototype;
       };
+
       return function assign(where) {
         if (gOPS && !(where instanceof O)) {
           console.warn('problematic Symbols', where);
@@ -489,10 +493,16 @@ if (!Array.prototype.includes) {
           where[keyOrSymbol] = arg[keyOrSymbol];
         }
 
-        for (var arg, i = 1; i < arguments.length; i++) {
-          arg = arguments[i];
+        for (var i = 1, ii = arguments.length; i < ii; ++i) {
+          var arg = arguments[i];
+
+          if (arg === null || arg === undefined) {
+            continue;
+          }
+
           O.keys(arg).concat(filterOS(arg)).forEach(set);
         }
+
         return where;
       };
     })()

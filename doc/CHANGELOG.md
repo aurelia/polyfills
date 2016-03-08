@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.0.4 (2016-03-08)
+
+
+#### Bug Fixes
+
+* **object:** assign ignores null or undefined ([941a892f](http://github.com/aurelia/polyfills/commit/941a892f8a63bce8dea3566c97e911ee31622359))
+
+
 ### 1.0.0-beta.1.0.3 (2016-03-07)
 
 
