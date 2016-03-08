@@ -1,3 +1,12 @@
+### 1.0.0-beta.1.0.5 (2016-03-08)
+
+
+#### Bug Fixes
+
+* **array:** make proto methods non enumerable ([6ed412fd](http://github.com/aurelia/polyfills/commit/6ed412fd206c2b987658e205470c496630a0dd6f), closes [#12](http://github.com/aurelia/polyfills/issues/12))
+* **symbol:** remove window global ([14916c10](http://github.com/aurelia/polyfills/commit/14916c10efa17a6f2a109beb4979fbe038879649))
+
+
 ### 1.0.0-beta.1.0.4 (2016-03-08)
 
 
