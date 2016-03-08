@@ -1,3 +1,5 @@
+import {PLATFORM} from 'aurelia-pal';
+
 (function (Object, GOPS) {'use strict';
 
   // (C) Andrea Giammarchi - Mit Style
@@ -6,7 +8,7 @@
 
   var
     setDescriptor,
-    G = typeof global === typeof G ? window : global,
+    G = PLATFORM.global,
     id = 0,
     random = '' + Math.random(),
     prefix = '__\x01symbol:',
