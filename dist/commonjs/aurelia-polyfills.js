@@ -206,7 +206,7 @@ var _aureliaPal = require('aurelia-pal');
           descriptor = O.getOwnPropertyDescriptor(ObjectProto, 'toString');
           descriptor.value = function () {
             var str = toString.call(this),
-                tst = typeof this === 'undefined' ? undefined : this[Symbol.toStringTag];
+                tst = typeof this === 'undefined' || this === null ? undefined : this[Symbol.toStringTag];
             return typeof tst === 'undefined' ? str : '[object ' + tst + ']';
           };
           dP(ObjectProto, 'toString', descriptor);

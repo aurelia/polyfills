@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.0.6 (2016-03-09)
+
+
+#### Bug Fixes
+
+* **symbol:** treat `null` value the same as `undefined` ([4b705bb1](http://github.com/aurelia/polyfills/commit/4b705bb1c4886e197d0e8dfcc291fb3308238372), closes [#13](http://github.com/aurelia/polyfills/issues/13))
+
+
 ### 1.0.0-beta.1.0.5 (2016-03-08)
 
 
