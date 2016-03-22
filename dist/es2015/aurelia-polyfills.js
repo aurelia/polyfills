@@ -1,6 +1,4 @@
-'use strict';
-
-var _aureliaPal = require('aurelia-pal');
+import { PLATFORM } from 'aurelia-pal';
 
 (function (Object, GOPS) {
   'use strict';
@@ -8,7 +6,7 @@ var _aureliaPal = require('aurelia-pal');
   if (GOPS in Object) return;
 
   var setDescriptor,
-      G = _aureliaPal.PLATFORM.global,
+      G = PLATFORM.global,
       id = 0,
       random = '' + Math.random(),
       prefix = '__\x01symbol:',
@@ -34,7 +32,7 @@ var _aureliaPal = require('aurelia-pal');
     for (var i = this.length; i-- && this[i] !== v;) {}
     return i;
   },
-      addInternalIfNeeded = function addInternalIfNeeded(o, uid, enumerable) {
+      addInternalIfNeeded = function (o, uid, enumerable) {
     if (!hOP.call(o, internalSymbol)) {
       defineProperty(o, internalSymbol, {
         enumerable: false,
@@ -45,7 +43,7 @@ var _aureliaPal = require('aurelia-pal');
     }
     o[internalSymbol]['@@' + uid] = enumerable;
   },
-      createWithSymbols = function createWithSymbols(proto, descriptors) {
+      createWithSymbols = function (proto, descriptors) {
     var self = create(proto);
     gOPN(descriptors).forEach(function (key) {
       if (propertyIsEnumerable.call(descriptors, key)) {
@@ -54,28 +52,28 @@ var _aureliaPal = require('aurelia-pal');
     });
     return self;
   },
-      copyAsNonEnumerable = function copyAsNonEnumerable(descriptor) {
+      copyAsNonEnumerable = function (descriptor) {
     var newDescriptor = create(descriptor);
     newDescriptor.enumerable = false;
     return newDescriptor;
   },
       get = function get() {},
-      onlyNonSymbols = function onlyNonSymbols(name) {
+      onlyNonSymbols = function (name) {
     return name != internalSymbol && !hOP.call(source, name);
   },
-      onlySymbols = function onlySymbols(name) {
+      onlySymbols = function (name) {
     return name != internalSymbol && hOP.call(source, name);
   },
       propertyIsEnumerable = function propertyIsEnumerable(key) {
     var uid = '' + key;
     return onlySymbols(uid) ? hOP.call(this, uid) && this[internalSymbol]['@@' + uid] : pIE.call(this, key);
   },
-      setAndGetSymbol = function setAndGetSymbol(uid) {
+      setAndGetSymbol = function (uid) {
     var descriptor = {
       enumerable: false,
       configurable: true,
       get: get,
-      set: function set(value) {
+      set: function (value) {
         setDescriptor(this, uid, {
           enumerable: false,
           configurable: true,
@@ -88,15 +86,15 @@ var _aureliaPal = require('aurelia-pal');
     defineProperty(ObjectProto, uid, descriptor);
     return source[uid] = defineProperty(Object(uid), 'constructor', sourceConstructor);
   },
-      _Symbol = function _Symbol2(description) {
+      Symbol = function Symbol(description) {
     if (this && this !== G) {
       throw new TypeError('Symbol is not a constructor');
     }
     return setAndGetSymbol(prefix.concat(description || '', random, ++id));
   },
       source = create(null),
-      sourceConstructor = { value: _Symbol },
-      sourceMap = function sourceMap(uid) {
+      sourceConstructor = { value: Symbol },
+      sourceMap = function (uid) {
     return source[uid];
   },
       $defineProperty = function defineProp(o, key, descriptor) {
@@ -142,19 +140,19 @@ var _aureliaPal = require('aurelia-pal');
   descriptor.value = propertyIsEnumerable;
   defineProperty(ObjectProto, PIE, descriptor);
 
-  descriptor.value = _Symbol;
+  descriptor.value = Symbol;
   defineProperty(G, 'Symbol', descriptor);
 
   descriptor.value = function (key) {
     var uid = prefix.concat(prefix, key, random);
     return uid in ObjectProto ? source[uid] : setAndGetSymbol(uid);
   };
-  defineProperty(_Symbol, 'for', descriptor);
+  defineProperty(Symbol, 'for', descriptor);
 
   descriptor.value = function (symbol) {
     return hOP.call(source, symbol) ? symbol.slice(prefixLength * 2, -random.length) : void 0;
   };
-  defineProperty(_Symbol, 'keyFor', descriptor);
+  defineProperty(Symbol, 'keyFor', descriptor);
 
   descriptor.value = function getOwnPropertyDescriptor(o, key) {
     var descriptor = gOPD(o, key);
@@ -178,12 +176,12 @@ var _aureliaPal = require('aurelia-pal');
 
   try {
     setDescriptor = create(defineProperty({}, prefix, {
-      get: function get() {
+      get: function () {
         return defineProperty(this, prefix, { value: false })[prefix];
       }
     }))[prefix] || defineProperty;
   } catch (o_O) {
-    setDescriptor = function setDescriptor(o, key, descriptor) {
+    setDescriptor = function (o, key, descriptor) {
       var protoDescriptor = gOPD(ObjectProto, key);
       delete ObjectProto[key];
       defineProperty(o, key, descriptor);
@@ -262,12 +260,12 @@ Number.isFinite = Number.isFinite || function (value) {
 };
 if (!String.prototype.endsWith) {
   String.prototype.endsWith = function (searchString, position) {
-    var subjectString = this.toString();
+    let subjectString = this.toString();
     if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
       position = subjectString.length;
     }
     position -= searchString.length;
-    var lastIndex = subjectString.indexOf(searchString, position);
+    let lastIndex = subjectString.indexOf(searchString, position);
     return lastIndex !== -1 && lastIndex === position;
   };
 }
@@ -280,13 +278,13 @@ if (!String.prototype.startsWith) {
 }
 if (!Array.from) {
   Array.from = function () {
-    var toInteger = function toInteger(it) {
+    var toInteger = function (it) {
       return isNaN(it = +it) ? 0 : (it > 0 ? Math.floor : Math.ceil)(it);
     };
-    var toLength = function toLength(it) {
+    var toLength = function (it) {
       return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
     };
-    var iterCall = function iterCall(iter, fn, a1, a2) {
+    var iterCall = function (iter, fn, a1, a2) {
       try {
         fn(a1, a2);
       } catch (E) {
@@ -329,7 +327,7 @@ if (!Array.prototype.find) {
     configurable: true,
     writable: true,
     enumerable: false,
-    value: function value(predicate) {
+    value: function (predicate) {
       if (this === null) {
         throw new TypeError('Array.prototype.find called on null or undefined');
       }
@@ -357,7 +355,7 @@ if (!Array.prototype.findIndex) {
     configurable: true,
     writable: true,
     enumerable: false,
-    value: function value(predicate) {
+    value: function (predicate) {
       if (this === null) {
         throw new TypeError('Array.prototype.findIndex called on null or undefined');
       }
@@ -385,7 +383,7 @@ if (!Array.prototype.includes) {
     configurable: true,
     writable: true,
     enumerable: false,
-    value: function value(searchElement) {
+    value: function (searchElement) {
       var O = Object(this);
       var len = parseInt(O.length) || 0;
       if (len === 0) {
@@ -415,10 +413,10 @@ if (!Array.prototype.includes) {
 }
 
 (function () {
-  var needsFix = false;
+  let needsFix = false;
 
   try {
-    var s = Object.keys('a');
+    let s = Object.keys('a');
     needsFix = s.length !== 1 || s[0] !== '0';
   } catch (e) {
     needsFix = true;
@@ -433,7 +431,7 @@ if (!Array.prototype.includes) {
 
       return function (obj) {
         if (obj === undefined || obj === null) {
-          throw TypeError('Cannot convert undefined or null to object');
+          throw TypeError(`Cannot convert undefined or null to object`);
         }
 
         obj = Object(obj);
@@ -508,7 +506,7 @@ if (!Array.prototype.includes) {
   var i;
 
   var defineProperty = Object.defineProperty,
-      is = function is(a, b) {
+      is = function (a, b) {
     return a === b || a !== a && b !== b;
   };
 
@@ -527,9 +525,7 @@ if (!Array.prototype.includes) {
   }
 
   if (typeof Map == 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
-    var _createCollection;
-
-    global.Map = createCollection((_createCollection = {
+    global.Map = createCollection({
       'delete': sharedDelete,
 
       has: mapHas,
@@ -546,14 +542,14 @@ if (!Array.prototype.includes) {
 
       forEach: sharedForEach,
 
-      clear: sharedClear
-    }, _createCollection[Symbol.iterator] = mapEntries, _createCollection));
+      clear: sharedClear,
+
+      [Symbol.iterator]: mapEntries
+    });
   }
 
   if (typeof Set == 'undefined' || typeof new Set().values !== 'function' || !new Set().values().next) {
-    var _createCollection2;
-
-    global.Set = createCollection((_createCollection2 = {
+    global.Set = createCollection({
       has: setHas,
 
       add: sharedAdd,
@@ -567,8 +563,10 @@ if (!Array.prototype.includes) {
 
       entries: setEntries,
 
-      forEach: sharedForEach
-    }, _createCollection2[Symbol.iterator] = sharedValues, _createCollection2));
+      forEach: sharedForEach,
+
+      [Symbol.iterator]: sharedValues
+    });
   }
 
   if (typeof WeakSet == 'undefined') {
@@ -677,25 +675,26 @@ if (!Array.prototype.includes) {
   }
 
   function sharedIterator(itp, array, array2) {
-    var _ref;
-
     var p = [0],
         done = false;
     itp.push(p);
-    return _ref = {}, _ref[Symbol.iterator] = function () {
-      return this;
-    }, _ref.next = function next() {
-      var v,
-          k = p[0];
-      if (!done && k < array.length) {
-        v = array2 ? [array[k], array2[k]] : array[k];
-        p[0]++;
-      } else {
-        done = true;
-        itp.splice(itp.indexOf(p), 1);
+    return {
+      [Symbol.iterator]: function () {
+        return this;
+      },
+      next: function () {
+        var v,
+            k = p[0];
+        if (!done && k < array.length) {
+          v = array2 ? [array[k], array2[k]] : array[k];
+          p[0]++;
+        } else {
+          done = true;
+          itp.splice(itp.indexOf(p), 1);
+        }
+        return { done: done, value: v };
       }
-      return { done: done, value: v };
-    }, _ref;
+    };
   }
 
   function sharedSize() {
@@ -710,14 +709,14 @@ if (!Array.prototype.includes) {
       callback.call(context, r.value[1], r.value[0], this);
     }
   }
-})(_aureliaPal.PLATFORM.global);
+})(PLATFORM.global);
 
-var emptyMetadata = Object.freeze({});
-var metadataContainerKey = '__metadata__';
-var bind = Function.prototype.bind;
+const emptyMetadata = Object.freeze({});
+const metadataContainerKey = '__metadata__';
+const bind = Function.prototype.bind;
 
-if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
-  _aureliaPal.PLATFORM.global.Reflect = {};
+if (typeof PLATFORM.global.Reflect === 'undefined') {
+  PLATFORM.global.Reflect = {};
 }
 
 if (typeof Reflect.getOwnMetadata !== 'function') {
@@ -728,8 +727,8 @@ if (typeof Reflect.getOwnMetadata !== 'function') {
 
 if (typeof Reflect.defineMetadata !== 'function') {
   Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
-    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
+    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
     targetContainer[metadataKey] = metadataValue;
   };
 }

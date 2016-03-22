@@ -1,6 +1,6 @@
-System.register(['aurelia-pal'], function (_export) {
-  'use strict';
+'use strict';
 
+System.register(['aurelia-pal'], function (_export, _context) {
   var PLATFORM, emptyMetadata, metadataContainerKey, bind;
   return {
     setters: [function (_aureliaPal) {
@@ -94,14 +94,14 @@ System.register(['aurelia-pal'], function (_export) {
           defineProperty(ObjectProto, uid, descriptor);
           return source[uid] = defineProperty(Object(uid), 'constructor', sourceConstructor);
         },
-            Symbol = function Symbol(description) {
+            _Symbol = function _Symbol2(description) {
           if (this && this !== G) {
             throw new TypeError('Symbol is not a constructor');
           }
           return setAndGetSymbol(prefix.concat(description || '', random, ++id));
         },
             source = create(null),
-            sourceConstructor = { value: Symbol },
+            sourceConstructor = { value: _Symbol },
             sourceMap = function sourceMap(uid) {
           return source[uid];
         },
@@ -148,19 +148,19 @@ System.register(['aurelia-pal'], function (_export) {
         descriptor.value = propertyIsEnumerable;
         defineProperty(ObjectProto, PIE, descriptor);
 
-        descriptor.value = Symbol;
+        descriptor.value = _Symbol;
         defineProperty(G, 'Symbol', descriptor);
 
         descriptor.value = function (key) {
           var uid = prefix.concat(prefix, key, random);
           return uid in ObjectProto ? source[uid] : setAndGetSymbol(uid);
         };
-        defineProperty(Symbol, 'for', descriptor);
+        defineProperty(_Symbol, 'for', descriptor);
 
         descriptor.value = function (symbol) {
           return hOP.call(source, symbol) ? symbol.slice(prefixLength * 2, -random.length) : void 0;
         };
-        defineProperty(Symbol, 'keyFor', descriptor);
+        defineProperty(_Symbol, 'keyFor', descriptor);
 
         descriptor.value = function getOwnPropertyDescriptor(o, key) {
           var descriptor = gOPD(o, key);
@@ -189,7 +189,7 @@ System.register(['aurelia-pal'], function (_export) {
             }
           }))[prefix] || defineProperty;
         } catch (o_O) {
-          setDescriptor = function (o, key, descriptor) {
+          setDescriptor = function setDescriptor(o, key, descriptor) {
             var protoDescriptor = gOPD(ObjectProto, key);
             delete ObjectProto[key];
             defineProperty(o, key, descriptor);
@@ -285,70 +285,49 @@ System.register(['aurelia-pal'], function (_export) {
         };
       }
       if (!Array.from) {
-        Array.from = (function () {
-          var toStr = Object.prototype.toString;
-          var isCallable = function isCallable(fn) {
-            return typeof fn === 'function' || toStr.call(fn) === '[object Function]';
+        Array.from = function () {
+          var toInteger = function toInteger(it) {
+            return isNaN(it = +it) ? 0 : (it > 0 ? Math.floor : Math.ceil)(it);
           };
-          var toInteger = function toInteger(value) {
-            var number = Number(value);
-            if (isNaN(number)) {
-              return 0;
-            }
-            if (number === 0 || !isFinite(number)) {
-              return number;
-            }
-            return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+          var toLength = function toLength(it) {
+            return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
           };
-          var maxSafeInteger = Math.pow(2, 53) - 1;
-          var toLength = function toLength(value) {
-            var len = toInteger(value);
-            return Math.min(Math.max(len, 0), maxSafeInteger);
+          var iterCall = function iterCall(iter, fn, a1, a2) {
+            try {
+              fn(a1, a2);
+            } catch (E) {
+              if (typeof iter.return == 'function') iter.return();
+              throw E;
+            }
           };
 
           return function from(arrayLike) {
-            var C = this;
-
-            var items = Object(arrayLike);
-
-            if (arrayLike == null) {
-              throw new TypeError("Array.from requires an array-like object - not null or undefined");
-            }
-
-            var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
-            var T;
-            if (typeof mapFn !== 'undefined') {
-              if (!isCallable(mapFn)) {
-                throw new TypeError('Array.from: when provided, the second argument must be a function');
+            var O = Object(arrayLike),
+                C = typeof this == 'function' ? this : Array,
+                aLen = arguments.length,
+                mapfn = aLen > 1 ? arguments[1] : undefined,
+                mapping = mapfn !== undefined,
+                index = 0,
+                iterFn = O[Symbol.iterator],
+                length,
+                result,
+                step,
+                iterator;
+            if (mapping) mapfn = mapfn.bind(aLen > 2 ? arguments[2] : undefined);
+            if (iterFn != undefined && !Array.isArray(arrayLike)) {
+              for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
+                result[index] = mapping ? iterCall(mapfn, step.value, index) : step.value;
               }
-
-              if (arguments.length > 2) {
-                T = arguments[2];
+            } else {
+              length = toLength(O.length);
+              for (result = new C(length); length > index; index++) {
+                result[index] = mapping ? mapfn(O[index], index) : O[index];
               }
             }
-
-            var len = toLength(items.length);
-
-            var A = isCallable(C) ? Object(new C(len)) : new Array(len);
-
-            var k = 0;
-
-            var kValue;
-            while (k < len) {
-              kValue = items[k];
-              if (mapFn) {
-                A[k] = typeof T === 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
-              } else {
-                A[k] = kValue;
-              }
-              k += 1;
-            }
-
-            A.length = len;
-
-            return A;
+            result.length = index;
+            return result;
           };
-        })();
+        }();
       }
 
       if (!Array.prototype.find) {
@@ -452,9 +431,9 @@ System.register(['aurelia-pal'], function (_export) {
         }
 
         if (needsFix) {
-          Object.keys = (function () {
+          Object.keys = function () {
             var hasOwnProperty = Object.prototype.hasOwnProperty,
-                hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+                hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
                 dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
                 dontEnumsLength = dontEnums.length;
 
@@ -485,7 +464,7 @@ System.register(['aurelia-pal'], function (_export) {
 
               return result;
             };
-          })();
+          }();
         }
       })();
 
@@ -497,7 +476,7 @@ System.register(['aurelia-pal'], function (_export) {
         O.defineProperty(O, 'assign', {
           configurable: true,
           writable: true,
-          value: (function () {
+          value: function () {
             var gOPS = O.getOwnPropertySymbols,
                 pIE = O.propertyIsEnumerable,
                 filterOS = gOPS ? function (self) {
@@ -527,7 +506,7 @@ System.register(['aurelia-pal'], function (_export) {
 
               return where;
             };
-          })()
+          }()
         });
       })(Object);
 
@@ -704,23 +683,25 @@ System.register(['aurelia-pal'], function (_export) {
         }
 
         function sharedIterator(itp, array, array2) {
+          var _ref;
+
           var p = [0],
               done = false;
           itp.push(p);
-          return {
-            next: function next() {
-              var v,
-                  k = p[0];
-              if (!done && k < array.length) {
-                v = array2 ? [array[k], array2[k]] : array[k];
-                p[0]++;
-              } else {
-                done = true;
-                itp.splice(itp.indexOf(p), 1);
-              }
-              return { done: done, value: v };
+          return _ref = {}, _ref[Symbol.iterator] = function () {
+            return this;
+          }, _ref.next = function next() {
+            var v,
+                k = p[0];
+            if (!done && k < array.length) {
+              v = array2 ? [array[k], array2[k]] : array[k];
+              p[0]++;
+            } else {
+              done = true;
+              itp.splice(itp.indexOf(p), 1);
             }
-          };
+            return { done: done, value: v };
+          }, _ref;
         }
 
         function sharedSize() {
@@ -740,6 +721,7 @@ System.register(['aurelia-pal'], function (_export) {
       emptyMetadata = Object.freeze({});
       metadataContainerKey = '__metadata__';
       bind = Function.prototype.bind;
+
 
       if (typeof PLATFORM.global.Reflect === 'undefined') {
         PLATFORM.global.Reflect = {};

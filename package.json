@@ -1,6 +1,6 @@
 {
   "name": "aurelia-polyfills",
-  "version": "1.0.0-beta.1.0.6",
+  "version": "1.0.0-beta.1.1.0",
   "description": "The minimal set of polyfills that the Aurelia platform needs to run on ES5 browsers.",
   "keywords": [
     "aurelia",
