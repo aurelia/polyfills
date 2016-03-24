@@ -10,7 +10,9 @@ if (typeof PLATFORM.global.Reflect === 'undefined') {
 
 if (typeof Reflect.getOwnMetadata !== 'function') {
   Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
-    return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+    if (target.hasOwnProperty(metadataContainerKey)) {
+      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+    }
   };
 }
 
