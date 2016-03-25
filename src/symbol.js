@@ -24,7 +24,7 @@ import {PLATFORM} from 'aurelia-pal';
     create = Object.create,
     keys = Object.keys,
     defineProperty = Object[DP],
-    defineProperties = Object[DPies],
+    $defineProperties = Object[DPies],
     descriptor = gOPD(Object, GOPN),
     ObjectProto = Object.prototype,
     hOP = ObjectProto.hasOwnProperty,
@@ -146,7 +146,7 @@ import {PLATFORM} from 'aurelia-pal';
         }
       });
     } else {
-      defineProperties(o, descriptors);
+      $defineProperties(o, descriptors);
     }
     return o;
   };
