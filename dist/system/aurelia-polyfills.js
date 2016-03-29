@@ -30,7 +30,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
             create = Object.create,
             keys = Object.keys,
             defineProperty = Object[DP],
-            defineProperties = Object[DPies],
+            $defineProperties = Object[DPies],
             descriptor = gOPD(Object, GOPN),
             ObjectProto = Object.prototype,
             hOP = ObjectProto.hasOwnProperty,
@@ -139,7 +139,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
               }
             });
           } else {
-            defineProperties(o, descriptors);
+            $defineProperties(o, descriptors);
           }
           return o;
         };
@@ -729,7 +729,9 @@ System.register(['aurelia-pal'], function (_export, _context) {
 
       if (typeof Reflect.getOwnMetadata !== 'function') {
         Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-          return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+          if (target.hasOwnProperty(metadataContainerKey)) {
+            return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+          }
         };
       }
 

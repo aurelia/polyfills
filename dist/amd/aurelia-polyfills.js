@@ -23,7 +23,7 @@ define(['aurelia-pal'], function (_aureliaPal) {
         create = Object.create,
         keys = Object.keys,
         defineProperty = Object[DP],
-        defineProperties = Object[DPies],
+        $defineProperties = Object[DPies],
         descriptor = gOPD(Object, GOPN),
         ObjectProto = Object.prototype,
         hOP = ObjectProto.hasOwnProperty,
@@ -132,7 +132,7 @@ define(['aurelia-pal'], function (_aureliaPal) {
           }
         });
       } else {
-        defineProperties(o, descriptors);
+        $defineProperties(o, descriptors);
       }
       return o;
     };
@@ -721,7 +721,9 @@ define(['aurelia-pal'], function (_aureliaPal) {
 
   if (typeof Reflect.getOwnMetadata !== 'function') {
     Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-      return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+      if (target.hasOwnProperty(metadataContainerKey)) {
+        return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+      }
     };
   }
 

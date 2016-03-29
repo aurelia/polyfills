@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.1.1 (2016-03-29)
+
+
+#### Bug Fixes
+
+* **symbol:** fix Object.defineProperties ([f548033d](http://github.com/aurelia/polyfills/commit/f548033d486a26770195daf95a94e905510106f1))
+
+
 ### 1.0.0-beta.1.1.0 (2016-03-22)
 
 

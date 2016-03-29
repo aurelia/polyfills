@@ -24,7 +24,7 @@ var _aureliaPal = require('aurelia-pal');
       create = Object.create,
       keys = Object.keys,
       defineProperty = Object[DP],
-      defineProperties = Object[DPies],
+      $defineProperties = Object[DPies],
       descriptor = gOPD(Object, GOPN),
       ObjectProto = Object.prototype,
       hOP = ObjectProto.hasOwnProperty,
@@ -133,7 +133,7 @@ var _aureliaPal = require('aurelia-pal');
         }
       });
     } else {
-      defineProperties(o, descriptors);
+      $defineProperties(o, descriptors);
     }
     return o;
   };
@@ -722,7 +722,9 @@ if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
 
 if (typeof Reflect.getOwnMetadata !== 'function') {
   Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-    return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+    if (target.hasOwnProperty(metadataContainerKey)) {
+      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+    }
   };
 }
 
