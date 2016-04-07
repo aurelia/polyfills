@@ -108,6 +108,10 @@ import { PLATFORM } from 'aurelia-pal';
     return o;
   },
       $getOwnPropertySymbols = function getOwnPropertySymbols(o) {
+
+    var cof = {}.toString.call(o).slice(8, -1);
+    o = cof == 'String' ? o.split('') : Object(o);
+
     return gOPN(o).filter(onlySymbols).map(sourceMap);
   };
 
@@ -282,7 +286,7 @@ if (!Array.from) {
       return isNaN(it = +it) ? 0 : (it > 0 ? Math.floor : Math.ceil)(it);
     };
     var toLength = function (it) {
-      return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
+      return it > 0 ? Math.min(toInteger(it), 0x1fffffffffffff) : 0;
     };
     var iterCall = function (iter, fn, a1, a2) {
       try {
