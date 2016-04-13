@@ -1,3 +1,8 @@
+### 1.0.0-beta.1.1.2 (2016-04-13)
+
+* fix: Object.getOwnPropertyNames: argument is not an Object error in symbol.js
+
+
 ### 1.0.0-beta.1.1.1 (2016-03-29)
 
 

@@ -116,10 +116,8 @@ System.register(['aurelia-pal'], function (_export, _context) {
           return o;
         },
             $getOwnPropertySymbols = function getOwnPropertySymbols(o) {
-
-          var cof = {}.toString.call(o).slice(8, -1);
-          o = cof == 'String' ? o.split('') : Object(o);
-
+          var cof = toString.call(o);
+          o = cof === '[object String]' ? o.split('') : Object(o);
           return gOPN(o).filter(onlySymbols).map(sourceMap);
         };
 
