@@ -34,7 +34,7 @@ if (typeof Reflect.metadata !== 'function') {
 
 if (typeof Reflect.defineProperty !== 'function') {
   Reflect.defineProperty = function(target, propertyKey, descriptor) {
-    if (typeof target !== 'object') {
+    if (typeof target === 'object' ? target === null : typeof target !== 'function') {
       throw new TypeError('Reflect.defineProperty called on non-object');
     }
     try {
