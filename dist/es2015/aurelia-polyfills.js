@@ -745,6 +745,20 @@ if (typeof Reflect.metadata !== 'function') {
   };
 }
 
+if (typeof Reflect.defineProperty !== 'function') {
+  Reflect.defineProperty = function (target, propertyKey, descriptor) {
+    if (typeof target === 'object' ? target === null : typeof target !== 'function') {
+      throw new TypeError('Reflect.defineProperty called on non-object');
+    }
+    try {
+      Object.defineProperty(target, propertyKey, descriptor);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+}
+
 if (typeof Reflect.construct !== 'function') {
   Reflect.construct = function (Target, args) {
     if (args) {

@@ -1,3 +1,16 @@
+### 1.0.0-beta.1.1.3 (2016-05-03)
+
+
+#### Bug Fixes
+
+* **reflect:** fix target-is-object check ([841a64b5](http://github.com/aurelia/polyfills/commit/841a64b597d320425773b393dfe4366ca0fc22bb))
+
+
+#### Features
+
+* **reflect:** add polyfill for defineProperty ([c6fbc900](http://github.com/aurelia/polyfills/commit/c6fbc900e8e62bbf6dd3730e3557de12e10d4f4b))
+
+
 ### 1.0.0-beta.1.1.2 (2016-04-13)
 
 * fix: Object.getOwnPropertyNames: argument is not an Object error in symbol.js

@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _aureliaPal = require('aurelia-pal');
 
 (function (Object, GOPS) {
@@ -743,6 +745,20 @@ if (typeof Reflect.metadata !== 'function') {
     return function (target, targetKey) {
       Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
     };
+  };
+}
+
+if (typeof Reflect.defineProperty !== 'function') {
+  Reflect.defineProperty = function (target, propertyKey, descriptor) {
+    if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) === 'object' ? target === null : typeof target !== 'function') {
+      throw new TypeError('Reflect.defineProperty called on non-object');
+    }
+    try {
+      Object.defineProperty(target, propertyKey, descriptor);
+      return true;
+    } catch (e) {
+      return false;
+    }
   };
 }
 
