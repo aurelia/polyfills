@@ -7,6 +7,8 @@
     "polyfill"
   ],
   "homepage": "http://aurelia.io",
+  "main": "dist/commonjs/aurelia-polyfills.js",
+  "moduleType": "node",
   "bugs": {
     "url": "https://github.com/aurelia/polyfills/issues"
   },
