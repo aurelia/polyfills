@@ -21,7 +21,8 @@ gulp.task('build-index', function(){
     'array.js',
     'object.js',
     'collections.js',
-    'reflect.js'
+    'reflect.js',
+    'console.js'
     ].map(function(file){
     return paths.root + file;
   });
