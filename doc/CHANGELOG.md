@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.1.6 (2016-05-24)
+
+
+#### Bug Fixes
+
+* **console:** remove in order to move to pal ([80f0c7b5](http://github.com/aurelia/polyfills/commit/80f0c7b5c2e3c1abf290b1ed42fb84f1c340d31d))
+
+
 ### 1.0.0-beta.1.1.5 (2016-05-24)
 
 
