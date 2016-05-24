@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.1.5 (2016-05-24)
+
+
+#### Features
+
+* **console:** moved console fix from logging-console to polyfills ([6db2334a](http://github.com/aurelia/polyfills/commit/6db2334a31e5d36f30e2dbda47bfaa2162f279bf))
+
+
 ### 1.0.0-beta.1.1.4 (2016-05-10)
 
 
