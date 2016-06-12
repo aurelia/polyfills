@@ -1,5 +1,3 @@
-declare module 'aurelia-polyfills' {
-  import {
-    PLATFORM
-  } from 'aurelia-pal';
-}
+import {
+  PLATFORM
+} from 'aurelia-pal';

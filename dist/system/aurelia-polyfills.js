@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['aurelia-pal'], function (_export, _context) {
+  "use strict";
+
   var PLATFORM, _typeof, emptyMetadata, metadataContainerKey, bind;
 
   return {
