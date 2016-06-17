@@ -1,0 +1,4 @@
+{
+  "name": "aurelia-polyfills",
+  "main": "dist/aurelia-polyfills.d.ts"
+}
