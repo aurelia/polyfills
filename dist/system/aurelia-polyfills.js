@@ -277,7 +277,13 @@ System.register(['aurelia-pal'], function (_export, _context) {
       Number.isFinite = Number.isFinite || function (value) {
         return typeof value === "number" && isFinite(value);
       };
-      if (!String.prototype.endsWith) {
+      if (!String.prototype.endsWith || function () {
+        try {
+          return !"ab".endsWith("a", 1);
+        } catch (e) {
+          return true;
+        }
+      }()) {
         String.prototype.endsWith = function (searchString, position) {
           var subjectString = this.toString();
           if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
@@ -289,12 +295,19 @@ System.register(['aurelia-pal'], function (_export, _context) {
         };
       }
 
-      if (!String.prototype.startsWith) {
+      if (!String.prototype.startsWith || function () {
+        try {
+          return !"ab".startsWith("b", 1);
+        } catch (e) {
+          return true;
+        }
+      }()) {
         String.prototype.startsWith = function (searchString, position) {
           position = position || 0;
           return this.substr(position, searchString.length) === searchString;
         };
       }
+
       if (!Array.from) {
         Array.from = function () {
           var toInteger = function toInteger(it) {
