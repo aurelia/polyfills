@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 var _aureliaPolyfills = require('./aurelia-polyfills');
 
 Object.keys(_aureliaPolyfills).forEach(function (key) {
-  if (key === "default") return;
+  if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
