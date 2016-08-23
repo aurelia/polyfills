@@ -66,5 +66,5 @@ if (typeof Reflect.construct !== 'function') {
 
 if (typeof Reflect.ownKeys !== 'function')
     Reflect.ownKeys = function (o) {
-    return (Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o))));
+    return (Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o)));
 }
