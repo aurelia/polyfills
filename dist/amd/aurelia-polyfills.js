@@ -800,4 +800,10 @@ define(['aurelia-pal'], function (_aureliaPal) {
       return new (bind.apply(Target, a))();
     };
   }
+
+  if (typeof Reflect.ownKeys !== 'function') {
+    Reflect.ownKeys = function (o) {
+      return Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o));
+    };
+  }
 });

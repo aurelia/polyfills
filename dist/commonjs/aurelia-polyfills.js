@@ -797,3 +797,9 @@ if (typeof Reflect.construct !== 'function') {
     return new (bind.apply(Target, a))();
   };
 }
+
+if (typeof Reflect.ownKeys !== 'function') {
+  Reflect.ownKeys = function (o) {
+    return Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o));
+  };
+}

@@ -811,6 +811,12 @@ System.register(['aurelia-pal'], function (_export, _context) {
           return new (bind.apply(Target, a))();
         };
       }
+
+      if (typeof Reflect.ownKeys !== 'function') {
+        Reflect.ownKeys = function (o) {
+          return Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o));
+        };
+      }
     }
   };
 });

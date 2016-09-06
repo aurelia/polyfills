@@ -868,9 +868,13 @@ if (typeof Reflect.construct !== 'function') {
         case 4: return new Target(args[0], args[1], args[2], args[3]);
       }
     }
-    
+
     var a = [null];
     a.push.apply(a, args);
     return new (bind.apply(Target, a));
   };
+}
+
+if (typeof Reflect.ownKeys !== 'function') {
+  Reflect.ownKeys = function(o) { return (Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o))); }
 }
