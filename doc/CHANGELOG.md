@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/aurelia/polyfills/compare/1.1.0...v1.1.1) (2016-09-13)
+
+
+### Bug Fixes
+
+* **array:** make Array.from work with mapping functions ([c425a49](https://github.com/aurelia/polyfills/commit/c425a49))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/aurelia/polyfills/compare/1.0.0-rc.1.0.0...v1.0.0) (2016-07-27)
 

@@ -301,9 +301,9 @@ if (!Array.from) {
     var toLength = function toLength(it) {
       return it > 0 ? Math.min(toInteger(it), 0x1fffffffffffff) : 0;
     };
-    var iterCall = function iterCall(iter, fn, a1, a2) {
+    var iterCall = function iterCall(iter, fn, val, index) {
       try {
-        fn(a1, a2);
+        return fn(val, index);
       } catch (E) {
         if (typeof iter.return == 'function') iter.return();
         throw E;
@@ -325,7 +325,7 @@ if (!Array.from) {
       if (mapping) mapfn = mapfn.bind(aLen > 2 ? arguments[2] : undefined);
       if (iterFn != undefined && !Array.isArray(arrayLike)) {
         for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
-          result[index] = mapping ? iterCall(mapfn, step.value, index) : step.value;
+          result[index] = mapping ? iterCall(iterator, mapfn, step.value, index) : step.value;
         }
       } else {
         length = toLength(O.length);
