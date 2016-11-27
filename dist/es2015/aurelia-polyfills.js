@@ -253,6 +253,10 @@ import { PLATFORM } from 'aurelia-pal';
   };
 })(Symbol.iterator, Array.prototype, String.prototype);
 
+Math.log2 = Math.log2 || function (x) {
+  return Math.log(x) * Math.LOG2E;
+};
+
 Number.isNaN = Number.isNaN || function (value) {
   return value !== value;
 };

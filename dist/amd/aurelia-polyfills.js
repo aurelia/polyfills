@@ -4,7 +4,7 @@ define(['aurelia-pal'], function (_aureliaPal) {
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
   } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
   };
 
   (function (Object, GOPS) {
@@ -259,6 +259,10 @@ define(['aurelia-pal'], function (_aureliaPal) {
       return iterator;
     };
   })(Symbol.iterator, Array.prototype, String.prototype);
+
+  Math.log2 = Math.log2 || function (x) {
+    return Math.log(x) * Math.LOG2E;
+  };
 
   Number.isNaN = Number.isNaN || function (value) {
     return value !== value;
