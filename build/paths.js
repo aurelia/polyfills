@@ -26,6 +26,7 @@ var paths = {
 
 paths.files = [
   'symbol.js',
+  'math.js',
   'number.js',
   'string.js',
   'array.js',
