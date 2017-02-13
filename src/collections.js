@@ -1,5 +1,7 @@
 import {PLATFORM} from 'aurelia-pal';
 
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+  
 (function (global) {
   //shared pointer
   var i;
@@ -233,3 +235,5 @@ import {PLATFORM} from 'aurelia-pal';
   }
 
 })(PLATFORM.global);
+
+} // endif (FEATURE_NO_ES2015)
