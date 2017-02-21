@@ -1,3 +1,5 @@
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 (function() {
   let needsFix = false;
 
@@ -103,3 +105,5 @@
       }())
     });
 }(Object));
+
+} // endif FEATURE_NO_ES2015

@@ -1,3 +1,5 @@
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 if (!Array.from) {
   Array.from = (function () {
     var toInteger = function(it) {
@@ -99,7 +101,9 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-if (!Array.prototype.includes) {
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ES2016 === 'undefined' && !Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
     configurable: true,
     writable: true,

@@ -1,35 +1,11 @@
 import {PLATFORM} from 'aurelia-pal';
 
-const emptyMetadata = Object.freeze({});
-const metadataContainerKey = '__metadata__';
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 const bind = Function.prototype.bind;
 
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
-}
-
-if (typeof Reflect.getOwnMetadata !== 'function') {
-  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
-    if (target.hasOwnProperty(metadataContainerKey)) {
-      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
-    }
-  };
-}
-
-if (typeof Reflect.defineMetadata !== 'function') {
-  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
-    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
-    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
-    targetContainer[metadataKey] = metadataValue;
-  };
-}
-
-if (typeof Reflect.metadata !== 'function') {
-  Reflect.metadata = function(metadataKey, metadataValue) {
-    return function(target, targetKey) {
-      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
-    };
-  };
 }
 
 if (typeof Reflect.defineProperty !== 'function') {
@@ -67,3 +43,36 @@ if (typeof Reflect.construct !== 'function') {
 if (typeof Reflect.ownKeys !== 'function') {
   Reflect.ownKeys = function(o) { return (Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o))); }
 }
+
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ESNEXT === 'undefined') {
+
+const emptyMetadata = Object.freeze({});
+const metadataContainerKey = '__metadata__';
+
+if (typeof Reflect.getOwnMetadata !== 'function') {
+  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
+    if (target.hasOwnProperty(metadataContainerKey)) {
+      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+    }
+  };
+}
+
+if (typeof Reflect.defineMetadata !== 'function') {
+  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
+    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
+    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+    targetContainer[metadataKey] = metadataValue;
+  };
+}
+
+if (typeof Reflect.metadata !== 'function') {
+  Reflect.metadata = function(metadataKey, metadataValue) {
+    return function(target, targetKey) {
+      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+    };
+  };
+}
+
+} // endif FEATURE_NO_ESNEXT

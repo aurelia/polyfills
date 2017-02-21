@@ -1,5 +1,7 @@
 import {PLATFORM} from 'aurelia-pal';
 
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 (function (Object, GOPS) {'use strict';
 
   // (C) Andrea Giammarchi - Mit Style
@@ -310,3 +312,6 @@ import {PLATFORM} from 'aurelia-pal';
   };
 
 }(Symbol.iterator, Array.prototype, String.prototype));
+
+
+} // endif FEATURE_NO_ES2015
