@@ -1,5 +1,7 @@
 import {PLATFORM} from 'aurelia-pal';
 
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 (function (Object, GOPS) {'use strict';
 
   // (C) Andrea Giammarchi - Mit Style
@@ -311,6 +313,11 @@ import {PLATFORM} from 'aurelia-pal';
 
 }(Symbol.iterator, Array.prototype, String.prototype));
 
+
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 Number.isNaN = Number.isNaN || function(value) {     
   return value !== value;
 };
@@ -318,6 +325,9 @@ Number.isNaN = Number.isNaN || function(value) {
 Number.isFinite = Number.isFinite || function(value) {
   return typeof value === "number" && isFinite(value);
 };
+
+} // endif FEATURE_NO_ES2015
+
 if ((!String.prototype.endsWith) || ((function() { try { return !("ab".endsWith("a",1)); } catch (e) { return true; } } )())) {
   String.prototype.endsWith = function(searchString, position) {
     let subjectString = this.toString();
@@ -336,6 +346,8 @@ if ((!String.prototype.startsWith) || ((function() { try { return !("ab".startsW
     return this.substr(position, searchString.length) === searchString;
   };
 }
+
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
 
 if (!Array.from) {
   Array.from = (function () {
@@ -438,7 +450,9 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-if (!Array.prototype.includes) {
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ES2016 === 'undefined' && !Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
     configurable: true,
     writable: true,
@@ -470,6 +484,8 @@ if (!Array.prototype.includes) {
     }
   });
 }
+
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
 
 (function() {
   let needsFix = false;
@@ -577,6 +593,10 @@ if (!Array.prototype.includes) {
     });
 }(Object));
 
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+  
 (function (global) {
   //shared pointer
   var i;
@@ -811,36 +831,14 @@ if (!Array.prototype.includes) {
 
 })(PLATFORM.global);
 
-const emptyMetadata = Object.freeze({});
-const metadataContainerKey = '__metadata__';
+} // endif (FEATURE_NO_ES2015)
+
+if (typeof FEATURE_NO_ES2015 === 'undefined') {
+
 const bind = Function.prototype.bind;
 
 if (typeof PLATFORM.global.Reflect === 'undefined') {
   PLATFORM.global.Reflect = {};
-}
-
-if (typeof Reflect.getOwnMetadata !== 'function') {
-  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
-    if (target.hasOwnProperty(metadataContainerKey)) {
-      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
-    }
-  };
-}
-
-if (typeof Reflect.defineMetadata !== 'function') {
-  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
-    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
-    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
-    targetContainer[metadataKey] = metadataValue;
-  };
-}
-
-if (typeof Reflect.metadata !== 'function') {
-  Reflect.metadata = function(metadataKey, metadataValue) {
-    return function(target, targetKey) {
-      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
-    };
-  };
 }
 
 if (typeof Reflect.defineProperty !== 'function') {
@@ -878,3 +876,36 @@ if (typeof Reflect.construct !== 'function') {
 if (typeof Reflect.ownKeys !== 'function') {
   Reflect.ownKeys = function(o) { return (Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o))); }
 }
+
+} // endif FEATURE_NO_ES2015
+
+if (typeof FEATURE_NO_ESNEXT === 'undefined') {
+
+const emptyMetadata = Object.freeze({});
+const metadataContainerKey = '__metadata__';
+
+if (typeof Reflect.getOwnMetadata !== 'function') {
+  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
+    if (target.hasOwnProperty(metadataContainerKey)) {
+      return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+    }
+  };
+}
+
+if (typeof Reflect.defineMetadata !== 'function') {
+  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
+    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
+    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+    targetContainer[metadataKey] = metadataValue;
+  };
+}
+
+if (typeof Reflect.metadata !== 'function') {
+  Reflect.metadata = function(metadataKey, metadataValue) {
+    return function(target, targetKey) {
+      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+    };
+  };
+}
+
+} // endif FEATURE_NO_ESNEXT

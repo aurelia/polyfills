@@ -1,3 +1,10 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/aurelia/polyfills/compare/1.1.1...v1.2.0) (2017-02-21)
+
+### Features
+
+* opt-out for polyfills
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/aurelia/polyfills/compare/1.1.0...v1.1.1) (2016-09-13)
 
