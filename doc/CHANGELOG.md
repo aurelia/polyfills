@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/aurelia/polyfills/compare/1.2.0...v1.2.1) (2017-03-23)
+
+
+### Bug Fixes
+
+* **symbols:** check that descriptors is an object ([e181ff7](https://github.com/aurelia/polyfills/commit/e181ff7))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/aurelia/polyfills/compare/1.1.1...v1.2.0) (2017-02-21)
 
