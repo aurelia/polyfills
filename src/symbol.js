@@ -252,6 +252,7 @@ if (typeof FEATURE_NO_ES2015 === 'undefined') {
         case toStringTag:
           descriptor = O.getOwnPropertyDescriptor(ObjectProto, 'toString');
           descriptor.value = function () {
+            if(typeof this === 'undefined') return 'undefined';
             var
               str = toString.call(this),
               tst = typeof this === 'undefined' || this === null ? undefined : this[Symbol.toStringTag]
