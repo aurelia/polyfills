@@ -139,7 +139,17 @@ if (typeof FEATURE_NO_ES2015 === 'undefined') {
   descriptor.value = $getOwnPropertySymbols;
   defineProperty(Object, GOPS, descriptor);
 
+  var cachedWindowNames = typeof window === 'object' ? Object.getOwnPropertyNames(window) : [];
+  var originalObjectGetOwnPropertyNames = Object.getOwnPropertyNames;
   descriptor.value = function getOwnPropertyNames(o) {
+    if (toString.call(o) === '[object Window]') {
+      try {
+        return originalObjectGetOwnPropertyNames(o);
+      } catch (e) {
+        // IE bug where layout engine calls userland gOPN for cross-domain "window" objects 
+        return [].concat([], cachedWindowNames);
+      }
+    }
     return gOPN(o).filter(onlyNonSymbols);
   };
   defineProperty(Object, GOPN, descriptor);
