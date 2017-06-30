@@ -87,7 +87,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
           },
               propertyIsEnumerable = function propertyIsEnumerable(key) {
             var uid = '' + key;
-            return onlySymbols(uid) ? hOP.call(this, uid) && this[internalSymbol]['@@' + uid] : pIE.call(this, key);
+            return onlySymbols(uid) ? hOP.call(this, uid) && this[internalSymbol] && this[internalSymbol]['@@' + uid] : pIE.call(this, key);
           },
               setAndGetSymbol = function setAndGetSymbol(uid) {
             var descriptor = {
@@ -140,7 +140,16 @@ System.register(['aurelia-pal'], function (_export, _context) {
           descriptor.value = $getOwnPropertySymbols;
           defineProperty(Object, GOPS, descriptor);
 
+          var cachedWindowNames = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? Object.getOwnPropertyNames(window) : [];
+          var originalObjectGetOwnPropertyNames = Object.getOwnPropertyNames;
           descriptor.value = function getOwnPropertyNames(o) {
+            if (toString.call(o) === '[object Window]') {
+              try {
+                return originalObjectGetOwnPropertyNames(o);
+              } catch (e) {
+                return [].concat([], cachedWindowNames);
+              }
+            }
             return gOPN(o).filter(onlyNonSymbols);
           };
           defineProperty(Object, GOPN, descriptor);

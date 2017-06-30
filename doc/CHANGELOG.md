@@ -1,3 +1,14 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/aurelia/polyfills/compare/1.2.1...v1.2.2) (2017-06-30)
+
+
+### Bug Fixes
+
+* **symbols:** propertyIsEnumerable null reference ([b7c59e5](https://github.com/aurelia/polyfills/commit/b7c59e5))
+* IE 11 access denied fix
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/aurelia/polyfills/compare/1.2.0...v1.2.1) (2017-03-23)
 
