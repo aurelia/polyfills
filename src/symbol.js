@@ -76,6 +76,7 @@ if (typeof FEATURE_NO_ES2015 === 'undefined') {
       var uid = '' + key;
       return onlySymbols(uid) ? (
         hOP.call(this, uid) &&
+        this[internalSymbol] &&
         this[internalSymbol]['@@' + uid]
       ) : pIE.call(this, key);
     },
