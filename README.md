@@ -18,6 +18,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and provi
 - `Number.isFinite`
 - `Number.isNaN`
 - `Object.assign`
+- `Object.is`
 - `Object.getOwnPropertySymbols`
 - `Reflect.construct`
 - `Reflect.defineMetadata`
