@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/aurelia/polyfills/compare/1.2.2...v1.3.0) (2018-01-25)
+
+
+### Features
+
+* **Object:** add Object.is() ([#58](https://github.com/aurelia/polyfills/issues/58)) ([3cf3410](https://github.com/aurelia/polyfills/commit/3cf3410))
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/aurelia/polyfills/compare/1.2.1...v1.2.2) (2017-06-30)
 

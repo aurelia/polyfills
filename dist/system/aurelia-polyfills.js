@@ -556,6 +556,16 @@ System.register(['aurelia-pal'], function (_export, _context) {
             }()
           });
         })(Object);
+
+        if (!Object.is) {
+          Object.is = function (x, y) {
+            if (x === y) {
+              return x !== 0 || 1 / x === 1 / y;
+            } else {
+              return x !== x && y !== y;
+            }
+          };
+        }
       }
 
       if (typeof FEATURE_NO_ES2015 === 'undefined') {
