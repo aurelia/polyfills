@@ -13,6 +13,7 @@
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-polyfills.js",
+  "module": "dist/es2015/aurelia-polyfills.js",
   "typings": "dist/aurelia-polyfills.d.ts",
   "repository": {
     "type": "git",
