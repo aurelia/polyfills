@@ -23,6 +23,7 @@
     "dist",
     "doc",
     "src",
+    "typings.json",
     "README.md",
     "LICENSE"
   ],
