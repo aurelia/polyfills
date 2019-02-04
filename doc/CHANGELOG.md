@@ -1,5 +1,5 @@
 <a name="1.3.3"></a>
-## [1.3.3](https://github.com/aurelia/polyfills/compare/1.3.1...1.3.3) (2019-02-03)
+## [1.3.3](https://github.com/aurelia/polyfills/compare/1.3.1...1.3.3) (2019-02-04)
 
 
 ### Bug Fixes
